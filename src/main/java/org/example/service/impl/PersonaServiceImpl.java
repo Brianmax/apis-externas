@@ -8,6 +8,7 @@ import org.example.request.PersonaRequest;
 import org.example.response.PersonaResponse;
 import org.example.response.ReniecResponse;
 import org.example.service.PersonaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class PersonaServiceImpl implements PersonaService {
     private final ReniecClient reniecClient;
     @Value("${token.api}")
     private String token;
+    @Autowired
     private PersonaRepository personaRepository;
     
     @Override
@@ -75,7 +77,7 @@ public class PersonaServiceImpl implements PersonaService {
     }
     
     private PersonaEntity getEntity(PersonaRequest personaRequest) {
-        ReniecResponse response = reniecClient.getPersonaReniec("73214426", token);
+        ReniecResponse response = reniecClient.getPersonaReniec("73214426", "Bearer " + token);
         PersonaEntity personaEntity = new PersonaEntity();
         if (response != null) {
             personaEntity.setNombres(response.getNombres());
